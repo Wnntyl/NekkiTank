@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+    public event Action OnHealthChange;
+
     [SerializeField]
     private Rigidbody2D _rigidbody;
     [SerializeField]
@@ -21,6 +24,8 @@ public class EnemyController : MonoBehaviour
 
         _currentHealth = _enemyData.health;
         _renderer.sprite = _enemyData.sprite;
+
+        CreateUi();
     }
 
     private void LoadData()
@@ -65,15 +70,43 @@ public class EnemyController : MonoBehaviour
             case "Bullet":
                 var bullet = collision.gameObject.GetComponent<BulletController>();
                 SetDamage(bullet.Damage);
+                Destroy(collision.gameObject);
                 break;
         }
     }
 
     private void SetDamage(float value)
     {
-        _currentHealth -= value * (1 - _enemyData.armor);
+        _currentHealth -= value * (1f - _enemyData.armor);
+
+        if (OnHealthChange != null)
+            OnHealthChange();
 
         if (_currentHealth <= 0)
             Destroy(gameObject);
+    }
+
+    private void CreateUi()
+    {
+        var prefab = Resources.Load<GameObject>("Prefabs/EnemyCanvas");
+        var canvas = Instantiate(prefab);
+        var controller = canvas.GetComponent<EnemyCanvasController>();
+        controller.Init(this);
+    }
+
+    public float HealthStatus
+    {
+        get
+        {
+            return _currentHealth / _enemyData.health;
+        }
+    }
+
+    public float Armor
+    {
+        get
+        {
+            return _enemyData.armor;
+        }
     }
 }
