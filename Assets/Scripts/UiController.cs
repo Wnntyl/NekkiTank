@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UiController : MonoBehaviour
 {
     [SerializeField]
-    private CanvasController _canvasController;
+    private MainCanvasController _canvasController;
 
     private void Start()
     {

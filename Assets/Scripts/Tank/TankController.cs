@@ -154,4 +154,12 @@ public class TankController : EntityController
             return _tankData.armor;
         }
     }
+
+    public override float MaxSpeed
+    {
+        get
+        {
+            return _tankData.maxSpeed;
+        }
+    }
 }

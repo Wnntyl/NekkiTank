@@ -111,4 +111,12 @@ public class EnemyController : EntityController
             return _enemyData.damage;
         }
     }
+
+    public override float MaxSpeed
+    {
+        get
+        {
+            return _enemyData.maxSpeed;
+        }
+    }
 }

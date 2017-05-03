@@ -15,7 +15,7 @@ public class CanvasController : MonoBehaviour
 
     protected EntityController _targetController;
 
-    public void Init(EntityController targetController)
+    public virtual void Init(EntityController targetController)
     {
         _targetController = targetController;
         _healthWidth = _healthBar.sizeDelta.x;

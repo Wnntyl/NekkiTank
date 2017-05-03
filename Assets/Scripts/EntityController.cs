@@ -15,4 +15,5 @@ public abstract class EntityController : MonoBehaviour
 
     public abstract float HealthStatus { get; }
     public abstract float Armor { get; }
+    public abstract float MaxSpeed { get; }
 }
