@@ -27,6 +27,10 @@ public class InputController : MonoBehaviour
         {
             _tankController.MoveBackward();
         }
+        else if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            _tankController.Stop();
+        }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
@@ -35,6 +39,10 @@ public class InputController : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
             _tankController.RotateLeft();
+        }
+        else if (Input.GetKeyUp(KeyCode.RightArrow) || Input.GetKeyUp(KeyCode.LeftArrow))
+        {
+            _tankController.StopRotation();
         }
 
         if (Input.GetKeyDown(KeyCode.X))
