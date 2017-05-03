@@ -9,6 +9,11 @@ public class TankController : MonoBehaviour
     private WeaponData _currentWeaponData;
     private float _currentSpeed;
 
+    public void Fire()
+    {
+
+    }
+
     public void MoveTowards()
     {
 
