@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour
 {
@@ -11,14 +12,14 @@ public class CanvasController : MonoBehaviour
     private RectTransform _armorBar;
 
     private float _healthWidth;
-    private float _armorWidth;
+
     protected EntityController _targetController;
 
     public void Init(EntityController targetController)
     {
         _targetController = targetController;
         _healthWidth = _healthBar.sizeDelta.x;
-        _armorWidth = _armorBar.sizeDelta.x;
+
         UpdateHealthBar();
         UpdateArmorBar();
 
@@ -33,7 +34,7 @@ public class CanvasController : MonoBehaviour
 
     private void UpdateArmorBar()
     {
-        var newWidth = _armorWidth * _targetController.Armor;
-        _armorBar.sizeDelta = new Vector2(newWidth, _armorBar.sizeDelta.y);
+        var image = _armorBar.GetComponent<Image>();
+        image.color = Color.Lerp(Color.white, Color.black, _targetController.Armor);
     }
 }
