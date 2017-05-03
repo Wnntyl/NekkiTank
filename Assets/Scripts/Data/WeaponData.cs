@@ -7,6 +7,7 @@ public class WeaponData
 {
     public float damage;
     public string spriteName;
+    public string bulletSpriteName;
 
     private Sprite _sprite;
 

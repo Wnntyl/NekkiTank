@@ -1,4 +1,5 @@
 {
     "damage": 3,
-    "spriteName": "tank_weapon_2"
+    "spriteName": "tank_weapon_2",
+	"bulletSpriteName": "tank_bullet_2"
 }

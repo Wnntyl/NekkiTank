@@ -8,6 +8,8 @@ public class TankController : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer _weaponRenderer;
+    [SerializeField]
+    private Transform _launchPoint;
 
     private TankData _tankData;
     private int _currentWeaponIndex;
@@ -15,11 +17,13 @@ public class TankController : MonoBehaviour
     private float _currentAngleVelocity;
     private float _currentAngle;
     private Rigidbody2D _rigidbody;
+    private BulletController _bulletPrefab;
 
     private void Awake()
     {
         LoadData();
         _rigidbody = GetComponent<Rigidbody2D>();
+        _bulletPrefab = Resources.Load<BulletController>("Prefabs/Bullet");
     }
 
     private void LoadData()
@@ -36,7 +40,8 @@ public class TankController : MonoBehaviour
 
     public void Fire()
     {
-
+        var bullet = Instantiate(_bulletPrefab, _launchPoint.position, transform.rotation);
+        bullet.SetParameters(CurrentWeapon.bulletSpriteName, CurrentWeapon.damage);
     }
 
     public void MoveTowards()
@@ -74,7 +79,7 @@ public class TankController : MonoBehaviour
         if (++_currentWeaponIndex >= _tankData.weapons.Length)
             _currentWeaponIndex = 0;
 
-        SetWeaponSprite(_currentWeaponIndex);
+        SetWeaponSprite();
     }
 
     public void PreviousWeapon()
@@ -82,13 +87,12 @@ public class TankController : MonoBehaviour
         if (--_currentWeaponIndex < 0)
             _currentWeaponIndex = _tankData.weapons.Length - 1;
 
-        SetWeaponSprite(_currentWeaponIndex);
+        SetWeaponSprite();
     }
 
-    private void SetWeaponSprite(int index)
+    private void SetWeaponSprite()
     {
-        var sprite = _tankData.GetWeapon(index).sprite;
-        _weaponRenderer.sprite = sprite;
+        _weaponRenderer.sprite = CurrentWeapon.sprite;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -102,5 +106,13 @@ public class TankController : MonoBehaviour
 
         _currentAngle += _currentAngleVelocity * Time.deltaTime;
         _rigidbody.MoveRotation(_currentAngle);
+    }
+
+    private WeaponData CurrentWeapon
+    {
+        get
+        {
+            return _tankData.GetWeapon(_currentWeaponIndex);
+        }
     }
 }
