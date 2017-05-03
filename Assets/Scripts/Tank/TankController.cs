@@ -6,9 +6,11 @@ public class TankController : MonoBehaviour
 {
     private const float ANGULAR_SPEED = 20f;
 
+    [SerializeField]
+    private SpriteRenderer _weaponRenderer;
+
     private TankData _tankData;
-    private WeaponData [] _weaponDatas;
-    private WeaponData _currentWeaponData;
+    private int _currentWeaponIndex;
     private float _currentMovementVelocity;
     private float _currentAngleVelocity;
     private float _currentAngle;
@@ -69,12 +71,24 @@ public class TankController : MonoBehaviour
 
     public void NextWeapon()
     {
+        if (++_currentWeaponIndex >= _tankData.weapons.Length)
+            _currentWeaponIndex = 0;
 
+        SetWeaponSprite(_currentWeaponIndex);
     }
 
     public void PreviousWeapon()
     {
+        if (--_currentWeaponIndex < 0)
+            _currentWeaponIndex = _tankData.weapons.Length - 1;
 
+        SetWeaponSprite(_currentWeaponIndex);
+    }
+
+    private void SetWeaponSprite(int index)
+    {
+        var sprite = _tankData.GetWeapon(index).sprite;
+        _weaponRenderer.sprite = sprite;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

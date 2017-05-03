@@ -1,5 +1,11 @@
 {
     "health": 100,
     "armor": 1,
-    "maxSpeed": 1
+    "maxSpeed": 1,
+    "weapons":
+    [
+        "GreyWeapon",
+        "OrangeWeapon",
+        "BlueWeapon"
+    ]
 }
