@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour
+public class EnemyController : EntityController
 {
-    public event Action OnHealthChange;
-
     [SerializeField]
     private Rigidbody2D _rigidbody;
     [SerializeField]
@@ -64,9 +62,6 @@ public class EnemyController : MonoBehaviour
 
         switch (collision.gameObject.tag)
         {
-            case "Player":
-                Destroy(gameObject);
-                break;
             case "Bullet":
                 var bullet = collision.gameObject.GetComponent<BulletController>();
                 SetDamage(bullet.Damage);
@@ -79,8 +74,7 @@ public class EnemyController : MonoBehaviour
     {
         _currentHealth -= value * (1f - _enemyData.armor);
 
-        if (OnHealthChange != null)
-            OnHealthChange();
+        InvokeHealthChangedEvent();
 
         if (_currentHealth <= 0)
             Destroy(gameObject);
@@ -94,7 +88,7 @@ public class EnemyController : MonoBehaviour
         controller.Init(this);
     }
 
-    public float HealthStatus
+    public override float HealthStatus
     {
         get
         {
@@ -102,11 +96,19 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public float Armor
+    public override float Armor
     {
         get
         {
             return _enemyData.armor;
+        }
+    }
+
+    public float Damage
+    {
+        get
+        {
+            return _enemyData.damage;
         }
     }
 }

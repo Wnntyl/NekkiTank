@@ -9,6 +9,7 @@ public class EnemyData
     public float health;
     public float armor;
     public float maxSpeed;
+    public float damage;
     public string spriteName;
 
     private Sprite _sprite;

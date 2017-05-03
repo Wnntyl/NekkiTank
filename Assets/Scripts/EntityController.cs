@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class EntityController : MonoBehaviour {
+public abstract class EntityController : MonoBehaviour
+{
+    public event Action OnHealthChange;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    protected void InvokeHealthChangedEvent()
+    {
+        if (OnHealthChange != null)
+            OnHealthChange();
+    }
+
+    public abstract float HealthStatus { get; }
+    public abstract float Armor { get; }
 }

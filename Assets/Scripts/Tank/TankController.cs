@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public class TankController : MonoBehaviour
+public class TankController : EntityController
 {
     private const float ANGULAR_SPEED = 20f;
 
@@ -18,12 +19,14 @@ public class TankController : MonoBehaviour
     private float _currentAngle;
     private Rigidbody2D _rigidbody;
     private BulletController _bulletPrefab;
+    private float _currentHealth;
 
     private void Awake()
     {
         LoadData();
         _rigidbody = GetComponent<Rigidbody2D>();
         _bulletPrefab = Resources.Load<BulletController>("Prefabs/Bullet");
+        _currentHealth = _tankData.health;
     }
 
     private void LoadData()
@@ -97,7 +100,17 @@ public class TankController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Trigger");
+        if (collision.gameObject == null)
+            return;
+
+        switch (collision.gameObject.tag)
+        {
+            case "Enemy":
+                var enemy = collision.gameObject.GetComponent<EnemyController>();
+                SetDamage(enemy.Damage);
+                Destroy(collision.gameObject);
+                break;
+        }
     }
 
     private void FixedUpdate()
@@ -113,6 +126,32 @@ public class TankController : MonoBehaviour
         get
         {
             return _tankData.GetWeapon(_currentWeaponIndex);
+        }
+    }
+
+    private void SetDamage(float value)
+    {
+        _currentHealth -= value * (1f - _tankData.armor);
+
+        InvokeHealthChangedEvent();
+
+        if (_currentHealth <= 0)
+            Destroy(gameObject);
+    }
+
+    public override float HealthStatus
+    {
+        get
+        {
+            return _currentHealth / _tankData.health;
+        }
+    }
+
+    public override float Armor
+    {
+        get
+        {
+            return _tankData.armor;
         }
     }
 }

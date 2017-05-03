@@ -1,6 +1,7 @@
 {
-    "health": 2,
-    "armor": 0.3,
+    "health": 5,
+    "armor": 0.2,
     "maxSpeed": 1,
+	"damage": 10,
     "spriteName": "enemies_spritesheet_0"
 }

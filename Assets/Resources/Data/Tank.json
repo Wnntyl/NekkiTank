@@ -1,6 +1,6 @@
 {
     "health": 100,
-    "armor": 1,
+    "armor": 0.7,
     "maxSpeed": 1,
     "weapons":
     [
