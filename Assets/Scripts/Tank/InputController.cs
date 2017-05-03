@@ -29,7 +29,7 @@ public class InputController : MonoBehaviour
         }
         else if (Input.GetKeyUp(KeyCode.UpArrow) || Input.GetKeyUp(KeyCode.DownArrow))
         {
-            _tankController.Stop();
+            _tankController.StopMovement();
         }
 
         if (Input.GetKeyDown(KeyCode.RightArrow))

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TankController : MonoBehaviour
 {
+    private const float ANGULAR_SPEED = 20f;
+
     private TankData _tankData;
     private WeaponData [] _weaponDatas;
     private WeaponData _currentWeaponData;
@@ -14,7 +16,20 @@ public class TankController : MonoBehaviour
 
     private void Awake()
     {
+        LoadData();
         _rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void LoadData()
+    {
+        var textAsset = Resources.Load("Data/Tank") as TextAsset;
+        if(textAsset == null)
+        {
+            Debug.LogError("Can't load Tank data!");
+            return;
+        }
+
+        _tankData = JsonUtility.FromJson<TankData>(textAsset.text);
     }
 
     public void Fire()
@@ -24,27 +39,27 @@ public class TankController : MonoBehaviour
 
     public void MoveTowards()
     {
-        _currentMovementVelocity = 1f;
+        _currentMovementVelocity = _tankData.maxSpeed;
     }
 
     public void MoveBackward()
     {
-        _currentMovementVelocity = -1f;
+        _currentMovementVelocity = -_tankData.maxSpeed;
     }
 
-    public void Stop()
+    public void StopMovement()
     {
         _currentMovementVelocity = 0f;
     }
 
     public void RotateRight()
     {
-        _currentAngleVelocity = -20f;
+        _currentAngleVelocity = -ANGULAR_SPEED;
     }
 
     public void RotateLeft()
     {
-        _currentAngleVelocity = 20f;
+        _currentAngleVelocity = ANGULAR_SPEED;
     }
 
     public void StopRotation()
