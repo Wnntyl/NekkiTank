@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3b24e04a954f52d4aaa491ef18d63c98
-timeCreated: 1493830766
+timeCreated: 1493879175
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,9 +8,9 @@ TextureImporter:
     21300002: tank_weapon_0
     21300004: tank_weapon_1
     21300006: tank_weapon_2
-    21300008: tank_bullet_0
-    21300010: tank_bullet_1
-    21300012: tank_bullet_2
+    21300008: tank_projectile_0
+    21300010: tank_projectile_1
+    21300012: tank_projectile_2
     21300014: ground
   serializedVersion: 4
   mipmaps:
@@ -154,7 +154,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: tank_bullet_0
+      name: tank_projectile_0
       rect:
         serializedVersion: 2
         x: 775
@@ -167,7 +167,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: tank_bullet_2
+      name: tank_projectile_2
       rect:
         serializedVersion: 2
         x: 755
@@ -180,7 +180,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: tank_bullet_1
+      name: tank_projectile_1
       rect:
         serializedVersion: 2
         x: 735

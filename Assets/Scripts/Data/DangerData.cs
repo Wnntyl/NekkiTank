@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Linq;
 
 [Serializable]
-public class EnemyData: EntityData
+public class DangerData: EntityData
 {
     public float damage;
     public string spriteName;
@@ -18,11 +18,19 @@ public class EnemyData: EntityData
         {
             if (_sprite == null)
             {
-                var tanksSpritesheet = Resources.LoadAll<Sprite>("GFX/enemies_spritesheet");
+                var tanksSpritesheet = Resources.LoadAll<Sprite>(SpritesheetName);
                 _sprite = tanksSpritesheet.Single(s => s.name == spriteName);
             }
 
             return _sprite;
+        }
+    }
+
+    protected virtual string SpritesheetName
+    {
+        get
+        {
+            return "GFX/enemies_spritesheet";
         }
     }
 }

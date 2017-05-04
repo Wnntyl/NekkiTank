@@ -12,36 +12,36 @@ public class TankController : EntityController
     [SerializeField]
     private Transform _launchPoint;
 
-    private TankData _tankData;
+    private TankData _data;
     private int _currentWeaponIndex;
     private float _currentMovementVelocity;
     private float _currentAngleVelocity;
     private float _currentAngle;
     private Rigidbody2D _rigidbody;
-    private BulletController _bulletPrefab;
+    private ProjectileController _projectilePrefab;
 
     private void Awake()
     {
-        _tankData = LoadData<TankData>("Data/Tank");
+        _data = LoadData<TankData>("Data/Tank");
         _rigidbody = GetComponent<Rigidbody2D>();
-        _bulletPrefab = Resources.Load<BulletController>("Prefabs/Bullet");
-        CurrentHealth = _tankData.health;
+        _projectilePrefab = Resources.Load<ProjectileController>("Prefabs/Projectile");
+        CurrentHealth = _data.health;
     }
 
     public void Fire()
     {
-        var bullet = Instantiate(_bulletPrefab, _launchPoint.position, transform.rotation);
-        bullet.SetParameters(CurrentWeapon.bulletSpriteName, CurrentWeapon.damage);
+        var projectile = Instantiate(_projectilePrefab, _launchPoint.position, transform.rotation);
+        projectile.Init(CurrentWeapon.projectile);
     }
 
     public void MoveTowards()
     {
-        _currentMovementVelocity = _tankData.maxSpeed;
+        _currentMovementVelocity = _data.maxSpeed;
     }
 
     public void MoveBackward()
     {
-        _currentMovementVelocity = -_tankData.maxSpeed;
+        _currentMovementVelocity = -_data.maxSpeed;
     }
 
     public void StopMovement()
@@ -66,7 +66,7 @@ public class TankController : EntityController
 
     public void NextWeapon()
     {
-        if (++_currentWeaponIndex >= _tankData.weapons.Length)
+        if (++_currentWeaponIndex >= _data.weapons.Length)
             _currentWeaponIndex = 0;
 
         SetWeaponSprite();
@@ -75,7 +75,7 @@ public class TankController : EntityController
     public void PreviousWeapon()
     {
         if (--_currentWeaponIndex < 0)
-            _currentWeaponIndex = _tankData.weapons.Length - 1;
+            _currentWeaponIndex = _data.weapons.Length - 1;
 
         SetWeaponSprite();
     }
@@ -112,7 +112,7 @@ public class TankController : EntityController
     {
         get
         {
-            return _tankData.GetWeapon(_currentWeaponIndex);
+            return _data.GetWeapon(_currentWeaponIndex);
         }
     }
 
@@ -120,7 +120,7 @@ public class TankController : EntityController
     {
         get
         {
-            return CurrentHealth / _tankData.health;
+            return CurrentHealth / _data.health;
         }
     }
 
@@ -128,7 +128,7 @@ public class TankController : EntityController
     {
         get
         {
-            return _tankData.armor;
+            return _data.armor;
         }
     }
 
@@ -136,7 +136,7 @@ public class TankController : EntityController
     {
         get
         {
-            return _tankData.maxSpeed;
+            return _data.maxSpeed;
         }
     }
 }

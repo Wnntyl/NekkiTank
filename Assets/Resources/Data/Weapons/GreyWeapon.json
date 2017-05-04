@@ -1,5 +1,5 @@
 {
     "damage": 1,
     "spriteName": "tank_weapon_0",
-	"bulletSpriteName": "tank_bullet_0"
+	"projectile": "GreyProjectile"
 }

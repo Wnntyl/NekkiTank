@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 public abstract class EntityController : MonoBehaviour
 {
     public event Action OnHealthChange;
-
     public float CurrentHealth { get; protected set; }
+    public float Damage { get; protected set; }
+
     public abstract float HealthStatus { get; }
     public abstract float Armor { get; }
     public abstract float MaxSpeed { get; }
 
-    protected abstract void HandleCollision(GameObject partner);
+    protected virtual void Move() { }
+    protected virtual void Rotate() { }
+    protected virtual void HandleCollision(GameObject partner) { }
 
     protected void InvokeHealthChangedEvent()
     {
@@ -47,9 +48,6 @@ public abstract class EntityController : MonoBehaviour
         Move();
         Rotate();
     }
-
-    protected virtual void Move() { }
-    protected virtual void Rotate() { }
 
     private void OnCollisionEnter2D(Collision2D col)
     {

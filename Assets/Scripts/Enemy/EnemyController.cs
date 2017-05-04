@@ -10,18 +10,20 @@ public class EnemyController : EntityController
     [SerializeField]
     private SpriteRenderer _renderer;
 
-    private EnemyData _enemyData;
+    private DangerData _data;
     private Transform _target;
     private Vector3 _currentDirection;
 
     private void Awake()
     {
-        _enemyData = LoadData<EnemyData>("Data/Enemies/Enemy1");
+        _data = LoadData<DangerData>("Data/Enemies/Enemy1");
+        Damage = _data.damage;
+
         var tank = GameObject.Find("Tank");
         SetTarget(tank.transform);
 
-        CurrentHealth = _enemyData.health;
-        _renderer.sprite = _enemyData.sprite;
+        CurrentHealth = _data.health;
+        _renderer.sprite = _data.sprite;
 
         CreateUi();
     }
@@ -34,7 +36,7 @@ public class EnemyController : EntityController
     protected override void Move()
     {
         _currentDirection = (_target.position - transform.position).normalized;
-        _rigidbody.MovePosition(transform.position + _currentDirection * _enemyData.maxSpeed * Time.deltaTime);
+        _rigidbody.MovePosition(transform.position + _currentDirection * _data.maxSpeed * Time.deltaTime);
     }
 
     protected override void Rotate()
@@ -50,9 +52,9 @@ public class EnemyController : EntityController
     {
         switch (partner.tag)
         {
-            case "Bullet":
-                var bullet = partner.GetComponent<BulletController>();
-                SetDamage(bullet.Damage);
+            case "Projectile":
+                var projectile = partner.GetComponent<ProjectileController>();
+                SetDamage(projectile.Damage);
                 Destroy(partner);
                 break;
         }
@@ -70,7 +72,7 @@ public class EnemyController : EntityController
     {
         get
         {
-            return CurrentHealth / _enemyData.health;
+            return CurrentHealth / _data.health;
         }
     }
 
@@ -78,15 +80,7 @@ public class EnemyController : EntityController
     {
         get
         {
-            return _enemyData.armor;
-        }
-    }
-
-    public float Damage
-    {
-        get
-        {
-            return _enemyData.damage;
+            return _data.armor;
         }
     }
 
@@ -94,7 +88,7 @@ public class EnemyController : EntityController
     {
         get
         {
-            return _enemyData.maxSpeed;
+            return _data.maxSpeed;
         }
     }
 }
