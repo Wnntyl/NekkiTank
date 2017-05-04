@@ -5,6 +5,8 @@ public abstract class EntityController : MonoBehaviour
 {
     public event Action OnDeath;
     public event Action OnHealthChange;
+    public event Action<float> OnMovementSpeedChange;
+
     public float CurrentHealth { get; protected set; }
     public float Damage { get; protected set; }
 
@@ -16,10 +18,16 @@ public abstract class EntityController : MonoBehaviour
     protected virtual void Rotate() { }
     protected virtual void HandleCollision(GameObject partner) { }
 
-    protected void InvokeHealthChangedEvent()
+    protected void InvokeHealthChangeEvent()
     {
         if (OnHealthChange != null)
             OnHealthChange();
+    }
+
+    protected void InvokeMovementSpeedChangeEvent(float value)
+    {
+        if (OnMovementSpeedChange != null)
+            OnMovementSpeedChange(value);
     }
 
     protected T LoadData<T>(string path)
@@ -38,7 +46,7 @@ public abstract class EntityController : MonoBehaviour
     {
         CurrentHealth -= value * (1f - Armor);
 
-        InvokeHealthChangedEvent();
+        InvokeHealthChangeEvent();
 
         if (CurrentHealth <= 0)
             Destroy(gameObject);

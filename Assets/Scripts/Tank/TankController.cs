@@ -10,9 +10,10 @@ public class TankController : EntityController
     [SerializeField]
     WeaponController _weaponController;
 
+    public float CurrentMovementVelocity { get; private set; }
+
     private TankData _data;
     private int _currentWeaponIndex;
-    private float _currentMovementVelocity;
     private float _currentAngleVelocity;
     private float _currentAngle;
     private Rigidbody2D _rigidbody;
@@ -40,17 +41,20 @@ public class TankController : EntityController
 
     public void MoveTowards()
     {
-        _currentMovementVelocity = _data.maxSpeed;
+        CurrentMovementVelocity = _data.maxSpeed;
+        InvokeMovementSpeedChangeEvent(CurrentMovementVelocity);
     }
 
     public void MoveBackward()
     {
-        _currentMovementVelocity = -_data.maxSpeed;
+        CurrentMovementVelocity = -_data.maxSpeed;
+        InvokeMovementSpeedChangeEvent(CurrentMovementVelocity);
     }
 
     public void StopMovement()
     {
-        _currentMovementVelocity = 0f;
+        CurrentMovementVelocity = 0f;
+        InvokeMovementSpeedChangeEvent(CurrentMovementVelocity);
     }
 
     public void RotateRight()
@@ -103,7 +107,7 @@ public class TankController : EntityController
 
     protected override void Move()
     {
-        _rigidbody.MovePosition(transform.position + transform.up * _currentMovementVelocity * Time.deltaTime);
+        _rigidbody.MovePosition(transform.position + transform.up * CurrentMovementVelocity * Time.deltaTime);
     }
 
     protected override void Rotate()
