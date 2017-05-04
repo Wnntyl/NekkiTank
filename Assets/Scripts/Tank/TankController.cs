@@ -5,12 +5,10 @@ using System;
 
 public class TankController : EntityController
 {
-    private const float ANGULAR_SPEED = 60f;
+    private const float ANGULAR_SPEED = 180f;
 
     [SerializeField]
-    private SpriteRenderer _weaponRenderer;
-    [SerializeField]
-    private Transform _launchPoint;
+    WeaponController _weaponController;
 
     private TankData _data;
     private int _currentWeaponIndex;
@@ -18,20 +16,18 @@ public class TankController : EntityController
     private float _currentAngleVelocity;
     private float _currentAngle;
     private Rigidbody2D _rigidbody;
-    private ProjectileController _projectilePrefab;
 
     private void Awake()
     {
         _data = LoadData<TankData>("Data/Tank");
         _rigidbody = GetComponent<Rigidbody2D>();
-        _projectilePrefab = Resources.Load<ProjectileController>("Prefabs/Projectile");
         CurrentHealth = _data.health;
+        ChangeWeapon();
     }
 
     public void Fire()
     {
-        var projectile = Instantiate(_projectilePrefab, _launchPoint.position, transform.rotation);
-        projectile.Init(CurrentWeapon.projectile);
+        _weaponController.Fire();
     }
 
     public void MoveTowards()
@@ -69,7 +65,7 @@ public class TankController : EntityController
         if (++_currentWeaponIndex >= _data.weapons.Length)
             _currentWeaponIndex = 0;
 
-        SetWeaponSprite();
+        ChangeWeapon();
     }
 
     public void PreviousWeapon()
@@ -77,12 +73,12 @@ public class TankController : EntityController
         if (--_currentWeaponIndex < 0)
             _currentWeaponIndex = _data.weapons.Length - 1;
 
-        SetWeaponSprite();
+        ChangeWeapon();
     }
 
-    private void SetWeaponSprite()
+    private void ChangeWeapon()
     {
-        _weaponRenderer.sprite = CurrentWeapon.sprite;
+        _weaponController.InstallWeapon(CurrentWeapon);
     }
 
     protected override void HandleCollision(GameObject partner)

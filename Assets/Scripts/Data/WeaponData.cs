@@ -5,7 +5,7 @@ using System.Linq;
 [Serializable]
 public class WeaponData
 {
-    public float damage;
+    public float reloadingTime;
     public string spriteName;
     public string projectile;
 

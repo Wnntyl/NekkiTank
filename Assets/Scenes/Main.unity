@@ -449,8 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c53a8cafbeff84469a5a5f8207fa012, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponRenderer: {fileID: 1635253259}
-  _launchPoint: {fileID: 23045866}
+  _weaponController: {fileID: 1635253260}
 --- !u!212 &330614759
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1141,6 +1140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1635253258}
   - component: {fileID: 1635253259}
+  - component: {fileID: 1635253260}
   m_Layer: 8
   m_Name: Weapon
   m_TagString: Untagged
@@ -1204,6 +1204,19 @@ SpriteRenderer:
   m_Size: {x: 0.22, y: 0.58}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
+--- !u!114 &1635253260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1635253257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c309735ca304d4146899929d216ac681, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponRenderer: {fileID: 1635253259}
+  _launchPoint: {fileID: 23045866}
 --- !u!1 &1721717950
 GameObject:
   m_ObjectHideFlags: 0

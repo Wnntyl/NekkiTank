@@ -1,5 +1,5 @@
 {
-    "damage": 1,
+    "reloadingTime": 0,
     "spriteName": "tank_weapon_0",
 	"projectile": "GreyProjectile"
 }
