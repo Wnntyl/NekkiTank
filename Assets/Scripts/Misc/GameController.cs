@@ -9,7 +9,6 @@ public class GameController : MonoBehaviour
     private Transform _tank;
     private GameObject _enemyPrefab;
     private Transform _enemiesRoot;
-    private float _restrictedSpawnRadius;
     private int _currentEnemyCount;
 
     private void Start()
@@ -17,8 +16,6 @@ public class GameController : MonoBehaviour
         _tank = GameObject.Find("Tank").transform;
         _enemiesRoot = GameObject.Find("Enemies").transform;
         _enemyPrefab = Resources.Load<GameObject>("Prefabs/Enemy");
-        _restrictedSpawnRadius = Mathf.Pow(Mathf.Pow(Utilities.GetScreenHeightInWorldSpace(), 2) +
-            Mathf.Pow(Utilities.GetScreenWidthInWorldSpace(), 2), 0.5f) / 2f;
 
         StartCoroutine(CreateEnemyCrtn());
     }
