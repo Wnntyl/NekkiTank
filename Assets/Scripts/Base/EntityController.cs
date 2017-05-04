@@ -3,6 +3,7 @@ using System;
 
 public abstract class EntityController : MonoBehaviour
 {
+    public event Action OnDeath;
     public event Action OnHealthChange;
     public float CurrentHealth { get; protected set; }
     public float Damage { get; protected set; }
@@ -63,5 +64,11 @@ public abstract class EntityController : MonoBehaviour
             return;
 
         HandleCollision(col.gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (OnDeath != null)
+            OnDeath();
     }
 }

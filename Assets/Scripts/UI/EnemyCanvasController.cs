@@ -1,8 +1,18 @@
 ﻿public class EnemyCanvasController : CanvasController
 {
+    private void Start()
+    {
+        MoveToTarget();
+    }
+
     private void Update()
     {
-        if(_targetController == null)
+        MoveToTarget();
+    }
+
+    private void MoveToTarget()
+    {
+        if (_targetController == null)
         {
             Destroy(gameObject);
             return;
