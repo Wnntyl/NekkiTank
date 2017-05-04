@@ -5,7 +5,7 @@ using System;
 
 public class TankController : EntityController
 {
-    private const float ANGULAR_SPEED = 180f;
+    private const float ANGULAR_SPEED = 220f;
 
     [SerializeField]
     WeaponController _weaponController;

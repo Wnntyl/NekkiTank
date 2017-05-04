@@ -1,5 +1,5 @@
 {
     "damage": 10,
-	"maxSpeed": 6,
+	"maxSpeed": 7,
     "spriteName": "tank_projectile_1"
 }

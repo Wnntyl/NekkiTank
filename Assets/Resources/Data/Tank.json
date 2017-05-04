@@ -1,7 +1,7 @@
 {
     "health": 100,
-    "armor": 0.7,
-    "maxSpeed": 2,
+    "armor": 0.9,
+    "maxSpeed": 3,
     "weapons":
     [
         "GreyWeapon",

@@ -1,5 +1,5 @@
 {
-    "reloadingTime": 0.2,
+    "reloadingTime": 0.6,
     "spriteName": "tank_weapon_2",
 	"projectile": "BlueProjectile"
 }
