@@ -17,7 +17,7 @@ public class UiController : MonoBehaviour
         var tankController = tank.GetComponent<TankController>();
         _canvasController.Init(tankController);
 
-        tankController.OnDeath += () => { _restartButton.gameObject.SetActive(true); };
+        tankController.OnDeath += () => { if(_restartButton != null) _restartButton.gameObject.SetActive(true); };
         _restartButton.onClick.AddListener(Restart);
     }
 

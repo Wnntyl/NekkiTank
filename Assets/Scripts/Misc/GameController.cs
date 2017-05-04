@@ -20,6 +20,12 @@ public class GameController : MonoBehaviour
         StartCoroutine(CreateEnemyCrtn());
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+    }
+
     private IEnumerator CreateEnemyCrtn()
     {
         while(true)
