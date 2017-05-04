@@ -19,6 +19,7 @@ public class WeaponController : MonoBehaviour
     {
         _projectilePrefab = Resources.Load<ProjectileController>("Prefabs/Projectile");
         _ready = true;
+        ReloadingProgress = 1f;
     }
 
     public void Fire()

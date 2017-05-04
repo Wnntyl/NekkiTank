@@ -25,6 +25,14 @@ public class TankController : EntityController
         ChangeWeapon();
     }
 
+    public float ReloadingProgress
+    {
+        get
+        {
+            return _weaponController.ReloadingProgress;
+        }
+    }
+
     public void Fire()
     {
         _weaponController.Fire();
