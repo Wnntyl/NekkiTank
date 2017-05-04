@@ -21,6 +21,12 @@ public class ProjectileController : EntityController
         _rigidbody.MovePosition(transform.position + transform.up * _data.maxSpeed * Time.deltaTime);
     }
 
+    protected override void HandleCollision(GameObject partner)
+    {
+        if (partner.tag == "Bound")
+            Destroy(gameObject);
+    }
+
     public override float HealthStatus { get { return 0; } }
     public override float Armor { get { return 0; } }
     public override float MaxSpeed { get { return _data.maxSpeed; } }
