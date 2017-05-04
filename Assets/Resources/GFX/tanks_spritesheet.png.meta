@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 3b24e04a954f52d4aaa491ef18d63c98
-timeCreated: 1493879175
+timeCreated: 1493891451
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -12,6 +12,7 @@ TextureImporter:
     21300010: tank_projectile_1
     21300012: tank_projectile_2
     21300014: ground
+    21300016: obstacle
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -200,6 +201,19 @@ TextureImporter:
         y: 384
         width: 128
         height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: obstacle
+      rect:
+        serializedVersion: 2
+        x: 735
+        y: 212
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

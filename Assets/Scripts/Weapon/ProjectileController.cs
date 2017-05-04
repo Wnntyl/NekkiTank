@@ -23,7 +23,7 @@ public class ProjectileController : EntityController
 
     protected override void HandleCollision(GameObject partner)
     {
-        if (partner.tag == "Bound")
+        if (partner.tag == "Bound" || partner.tag == "Obstacle")
             Destroy(gameObject);
     }
 
