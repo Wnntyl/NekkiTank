@@ -2,11 +2,8 @@
 using UnityEngine;
 
 [Serializable]
-public class TankData
+public class TankData: EntityData
 {
-    public float health;
-    public float armor;
-    public float maxSpeed;
     public string[] weapons;
 
     private WeaponData[] _weapons;
@@ -23,15 +20,15 @@ public class TankData
 
     private void LoadWeapons()
     {
-        if (_weapons == null)
+        if (_weapons != null)
+            return;
+
+        _weapons = new WeaponData[weapons.Length];
+        for (var i = 0; i < weapons.Length; i++)
         {
-            _weapons = new WeaponData[weapons.Length];
-            for (var i = 0; i < weapons.Length; i++)
-            {
-                var textAsset = Resources.Load("Data/Weapons/" + weapons[i]) as TextAsset;
-                if (textAsset != null)
-                    _weapons[i] = JsonUtility.FromJson<WeaponData>(textAsset.text);
-            }
+            var textAsset = Resources.Load("Data/Weapons/" + weapons[i]) as TextAsset;
+            if (textAsset != null)
+                _weapons[i] = JsonUtility.FromJson<WeaponData>(textAsset.text);
         }
     }
 }

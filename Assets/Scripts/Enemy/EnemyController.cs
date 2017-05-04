@@ -12,30 +12,18 @@ public class EnemyController : EntityController
 
     private EnemyData _enemyData;
     private Transform _target;
-    private float _currentHealth;
+    private Vector3 _currentDirection;
 
     private void Awake()
     {
-        LoadData();
+        _enemyData = LoadData<EnemyData>("Data/Enemies/Enemy1");
         var tank = GameObject.Find("Tank");
         SetTarget(tank.transform);
 
-        _currentHealth = _enemyData.health;
+        CurrentHealth = _enemyData.health;
         _renderer.sprite = _enemyData.sprite;
 
         CreateUi();
-    }
-
-    private void LoadData()
-    {
-        var textAsset = Resources.Load("Data/Enemies/Enemy1") as TextAsset;
-        if (textAsset == null)
-        {
-            Debug.LogError("Can't load Enemy data!");
-            return;
-        }
-
-        _enemyData = JsonUtility.FromJson<EnemyData>(textAsset.text);
     }
 
     public void SetTarget(Transform target)
@@ -43,41 +31,31 @@ public class EnemyController : EntityController
         _target = target;
     }
 
-    private void FixedUpdate()
+    protected override void Move()
     {
-        var direction = (_target.position - transform.position).normalized;
-        _rigidbody.MovePosition(transform.position + direction * _enemyData.maxSpeed * Time.deltaTime);
+        _currentDirection = (_target.position - transform.position).normalized;
+        _rigidbody.MovePosition(transform.position + _currentDirection * _enemyData.maxSpeed * Time.deltaTime);
+    }
 
-        var angle = Vector2.Angle(Vector2.right, direction);
+    protected override void Rotate()
+    {
+        var angle = Vector2.Angle(Vector2.right, _currentDirection);
         if (_target.position.y < transform.position.y)
             angle = 360f - angle;
 
         _rigidbody.MoveRotation(angle);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void HandleCollision(GameObject partner)
     {
-        if (collision.gameObject == null)
-            return;
-
-        switch (collision.gameObject.tag)
+        switch (partner.tag)
         {
             case "Bullet":
-                var bullet = collision.gameObject.GetComponent<BulletController>();
+                var bullet = partner.GetComponent<BulletController>();
                 SetDamage(bullet.Damage);
-                Destroy(collision.gameObject);
+                Destroy(partner);
                 break;
         }
-    }
-
-    private void SetDamage(float value)
-    {
-        _currentHealth -= value * (1f - _enemyData.armor);
-
-        InvokeHealthChangedEvent();
-
-        if (_currentHealth <= 0)
-            Destroy(gameObject);
     }
 
     private void CreateUi()
@@ -92,7 +70,7 @@ public class EnemyController : EntityController
     {
         get
         {
-            return _currentHealth / _enemyData.health;
+            return CurrentHealth / _enemyData.health;
         }
     }
 

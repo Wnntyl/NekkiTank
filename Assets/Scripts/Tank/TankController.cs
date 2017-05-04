@@ -5,7 +5,7 @@ using System;
 
 public class TankController : EntityController
 {
-    private const float ANGULAR_SPEED = 40f;
+    private const float ANGULAR_SPEED = 60f;
 
     [SerializeField]
     private SpriteRenderer _weaponRenderer;
@@ -19,26 +19,13 @@ public class TankController : EntityController
     private float _currentAngle;
     private Rigidbody2D _rigidbody;
     private BulletController _bulletPrefab;
-    private float _currentHealth;
 
     private void Awake()
     {
-        LoadData();
+        _tankData = LoadData<TankData>("Data/Tank");
         _rigidbody = GetComponent<Rigidbody2D>();
         _bulletPrefab = Resources.Load<BulletController>("Prefabs/Bullet");
-        _currentHealth = _tankData.health;
-    }
-
-    private void LoadData()
-    {
-        var textAsset = Resources.Load("Data/Tank") as TextAsset;
-        if(textAsset == null)
-        {
-            Debug.LogError("Can't load Tank data!");
-            return;
-        }
-
-        _tankData = JsonUtility.FromJson<TankData>(textAsset.text);
+        CurrentHealth = _tankData.health;
     }
 
     public void Fire()
@@ -98,25 +85,25 @@ public class TankController : EntityController
         _weaponRenderer.sprite = CurrentWeapon.sprite;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void HandleCollision(GameObject partner)
     {
-        if (collision.gameObject == null)
-            return;
-
-        switch (collision.gameObject.tag)
+        switch (partner.tag)
         {
             case "Enemy":
-                var enemy = collision.gameObject.GetComponent<EnemyController>();
+                var enemy = partner.GetComponent<EnemyController>();
                 SetDamage(enemy.Damage);
-                Destroy(collision.gameObject);
+                Destroy(partner);
                 break;
         }
     }
 
-    private void FixedUpdate()
+    protected override void Move()
     {
         _rigidbody.MovePosition(transform.position + transform.up * _currentMovementVelocity * Time.deltaTime);
+    }
 
+    protected override void Rotate()
+    {
         _currentAngle += _currentAngleVelocity * Time.deltaTime;
         _rigidbody.MoveRotation(_currentAngle);
     }
@@ -129,21 +116,11 @@ public class TankController : EntityController
         }
     }
 
-    private void SetDamage(float value)
-    {
-        _currentHealth -= value * (1f - _tankData.armor);
-
-        InvokeHealthChangedEvent();
-
-        if (_currentHealth <= 0)
-            Destroy(gameObject);
-    }
-
     public override float HealthStatus
     {
         get
         {
-            return _currentHealth / _tankData.health;
+            return CurrentHealth / _tankData.health;
         }
     }
 

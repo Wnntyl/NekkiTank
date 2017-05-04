@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using System.Linq;
 
-[SerializeField]
-public class EnemyData
+[Serializable]
+public class EnemyData: EntityData
 {
-    public float health;
-    public float armor;
-    public float maxSpeed;
     public float damage;
     public string spriteName;
 
